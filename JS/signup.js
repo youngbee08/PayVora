@@ -46,7 +46,7 @@ async function createAnAccount(e) {
         errorP.textContent = "";
         loadingCon.classList.add("loadBack");
         SignUpText.style.display ="none";
-        submitBTN.disabled === true;
+        submitBTN.disabled = true;
         submitBTN.classList.add("cursorNo");
         const accountDetails = {
             userName:userNameINP.value.trim(),
@@ -93,6 +93,7 @@ async function createAnAccount(e) {
             icon: "success",
             confirmButtonText: "OK",
         });
+        console.log("Redirecting...");
         setTimeout(() => {
             location.href = '../Pages/dashboard.html';
         }, 2000);
@@ -112,7 +113,7 @@ async function createAnAccount(e) {
     } finally {
         loadingCon.classList.remove("loadBack");
         SignUpText.style.display ="block";
-        submitBTN.disabled === false;
+        submitBTN.disabled = false;
         submitBTN.classList.remove("cursorNo");
     }
 }

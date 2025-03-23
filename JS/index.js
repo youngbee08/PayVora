@@ -37,7 +37,7 @@ function goTOSignUp() {
     location.href = 'Pages/signup.html';
 }
 function goTOSignIn() {
-    location.href = "../Pages/signin.html";
+    location.href = 'Pages/signin.html';
 }
 function scrollUp() {
     if (window.scrollY > 100) {
