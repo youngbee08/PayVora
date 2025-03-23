@@ -34,7 +34,7 @@ function closeMenu() {
 }
 
 function goTOSignUp() {
-    location.href = "../Pages/signup.html";
+    location.href = 'Pages/signup.html';
 }
 function goTOSignIn() {
     location.href = "../Pages/signin.html";
