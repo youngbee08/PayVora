@@ -96,7 +96,7 @@ async function sendMoney(e) {
             accountNumber:sendForm.accountNumber.value.trim(),
             description:sendForm.description.value.trim(),
             amount:sendForm.amount.value.trim(),
-            transactiontype:"Debit",
+            transactiontype:"Credit",
             date:date.toLocaleDateString()
         };
         console.log(transactionDetails);
