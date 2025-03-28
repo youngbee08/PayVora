@@ -1,0 +1,171 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: black;
+}
+.sendForm{
+    width: 100%;
+    margin: 5rem 0 0;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    font-family: roboto;
+}
+.sendForm input{
+    width: 30%;
+    margin: auto;
+    border: 1px solid rgb(59, 59, 59);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    position: relative;
+    font-size: small;
+    padding: 1rem 2rem;
+    background-color: transparent;
+    color: red;
+}
+.sendForm button{
+    width: fit-content;
+    margin: auto;
+}
+.sendForm input:focus{
+    outline: 0;
+}
+.sendForm input::placeholder{
+    font-size: 15px;
+    transition: 0.3s ease-in-out;
+}
+.sendForm input:focus::placeholder{
+    transform: translateY(-.8rem);
+    font-size: 11px;
+}
+.sendForm button{
+    border: none;
+    background-color: red;
+    color: white;
+    width: 30%;
+    padding: .9rem 0;
+    border-radius: 10px;
+    cursor: pointer;
+}
+/* Make the SweetAlert2 popup red with black text */
+.swal2-popup {
+    background: red !important; /* Red background */
+    color: black !important; /* Black text */
+}
+
+/* Change the overlay (background blur effect) */
+.swal2-overlay {
+    background: rgba(255, 0, 0, 0.5) !important; /* Light red overlay */
+}
+
+/* Change button colors */
+.swal2-confirm, .swal2-cancel {
+    background: black !important; /* Black button */
+    color: red !important; /* Red text */
+    border: 2px solid red !important; /* Red border */
+}
+
+/* ✅ Change the Success Icon (Checkmark & Border) */
+.swal2-icon.swal2-success {
+    border-color: black !important; /* Black success border */
+    color: black !important; /* Black checkmark */
+}
+
+.swal2-icon.swal2-success .swal2-success-ring {
+    border-color: black !important; /* Black outer ring */
+}
+
+.swal2-icon.swal2-success .swal2-success-line-tip,
+.swal2-icon.swal2-success .swal2-success-line-long {
+    background-color: black !important; /* Black checkmark lines */
+}
+
+/* ✅ Change the Error Icon (X mark & Border) */
+.swal2-icon.swal2-error {
+    border-color: black !important; /* Black border */
+    color: black !important; /* Black 'X' */
+}
+
+.swal2-icon.swal2-error .swal2-x-mark {
+    color: black !important; /* Black 'X' */
+}
+
+/* ✅ Change the Info Icon ('i' & Border) */
+.swal2-icon.swal2-info {
+    border-color: black !important; /* Black border */
+    color: black !important; /* Black 'i' */
+}
+
+/* ✅ Change the Warning Icon ('!' & Border) */
+.swal2-icon.swal2-warning {
+    border-color: black !important; /* Black border */
+    color: black !important; /* Black '!' */
+}
+
+/* LOADING */
+.loading-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    color: white;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    display: none !important;
+}
+.loadBack{
+    display: inline-block !important;
+}
+.cursorNo{
+    cursor: not-allowed !important;
+}
+.loading-text {
+    margin: auto !important;
+    font-size: 14px;
+    font-weight: 400;
+    border: none !important;
+    text-align: center !important;
+}
+.dots {
+    text-align: center !important;
+    display: inline-block;
+}
+.dot {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin: 0 3px;
+    background-color: white;
+    border-radius: 50%;
+    animation: blink 1.4s infinite;
+    text-align: center !important;
+}
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.dot:nth-child(4) {
+    animation-delay: 0.6s;
+}
+@keyframes blink {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+/* LOADING ENDS */
+@media screen and (max-width:750px) {
+    .sendForm input{
+        width: 100%;
+    }
+    .sendForm button{
+        width: 100%;
+    }
+}

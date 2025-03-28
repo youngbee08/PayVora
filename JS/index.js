@@ -7,6 +7,9 @@ const signUp = document.querySelector('#signUpBTN');
 const signIn = document.querySelector('#logInBTN');
 const upCon = document.querySelector(".up-con");
 const getStartedBtn = document.getElementById("getStartedBtn");
+const each = document.querySelectorAll(".carryq");
+const answer = document.querySelectorAll(".answer");
+const cheverondown = document.querySelectorAll(".icon-down")
 signUp.addEventListener('click', goTOSignUp);
 signIn.addEventListener('click', goTOSignIn);
 window.addEventListener('scroll', scrollHeader);
@@ -49,3 +52,28 @@ function scrollUp() {
 function toUp() {
     window.scrollTo({top:0, behavior:"smooth"})
 }
+each.forEach((eachquestion, index) =>{
+    eachquestion.addEventListener("click", function() {
+        answer.forEach((ans, i) => {
+         if (i !== index) {
+             ans.classList.remove("unknownAnswer");
+         }
+        });
+        cheverondown.forEach((icon, i) => {
+         if (i !== index) {
+             icon.classList.remove("unknowni");
+            }
+        });
+        let eachanswer = answer[index];
+        let eachicondown = cheverondown[index];
+        if (eachanswer.classList.contains("unknownAnswer") && eachicondown.classList.contains("unknowni")) {
+            eachicondown.classList.remove("unknowni");
+            eachanswer.classList.remove("unknownAnswer");
+        } else {
+            console.log("im clicked");
+            eachanswer.classList.add("unknownAnswer");
+            eachicondown.classList.add("unknowni");
+            eachanswer.scrollIntoView({ behavior: "smooth" }); // Scroll down smoothly
+        }
+    });
+});

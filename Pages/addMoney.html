@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayVora-Transfer Money</title>
+    <link rel="stylesheet" href="../Css/sendMoney.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body style="display: none;">
+    <form action="" class="sendForm" id="sendForm">
+        <h1>Withdraw from Bank Account</h1>
+        <input name="accountNumber" type="number" placeholder="Enter 10 digits Account Number" required>
+        <input type="text" name="senderName" placeholder="Enter Account sender's Name" required>
+        <input type="text" name="bankName" placeholder="Enter Bank Name" required>
+        <input type="number" name="amount" placeholder="Enter Ammount" required>
+        <input type="text" name="description" placeholder="Enter Description (Optional)">
+        <input type="number" placeholder="Enter your 4 digits pin" maxlength="4" name="pin" maxlength="4" required>
+        <p id="errorP"></p>
+        <button id="proceedBTN">
+            <div class="loading-container" id="loadingCon">
+                <div class="loading-text">Proccessing<span class="dots">
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </span>
+               </div>
+            </div>
+           <span id="prodeedtext">Proceed</span>
+        </button>
+    </form>
+    <script type="module" src="../JS/addmoney.js"></script>
+</body>
+</html>

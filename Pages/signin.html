@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayVora || Log In</title>
+    <title>PayVora || Log In To Your Account</title>
+    <link rel="shortcut icon" href="./Images/PayVora-logo.png" type="image/x-icon">
+
     <link rel="stylesheet" href="../Css/signup.css">
     <link rel="shortcut icon" href="./Images/PayVora-logo.png" type="image/x-icon">
     <link rel="shortcut icon" href="./IMAGES/logo-black-fotor-2025031310828.png" type="image/x-icon">
@@ -11,6 +13,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
     <header class="header" id="header">
@@ -18,40 +21,58 @@
             <img src="../Images/PayVora-logo(increased)-white.png" alt="PayVora Logo" id="logo">
         </div>
     </header>
-    <hero class="hero" id="hero">
-        <div class="firstheropart">
-            <div class="h1andP">
-                <h1>Login To Your Existing Account</h1>
-                <p>Sign up for PayVora Vault and safeguard your funds with top-notch security.</p>
-            </div>
-            <form action="" id="signUpForm">
-                <div class="email">
-                    <i class="fa-regular fa-envelope"></i>
-                    <input type="email" name="email" id="email" placeholder="Enter Your Email">
+    <div class="con">
+        <hero class="hero" id="hero">
+            <div class="firstheropart">
+                <div class="h1andP">
+                    <h1>Login To Your Existing Account</h1>
+                    <p>Sign up for PayVora Vault and safeguard your funds with top-notch security.</p>
                 </div>
-                <div class="password">
-                    <i class="fa-solid fa-lock"></i>
-                    <input type="password" name="password" id="password" placeholder="Enter Your Password">
-                    <div class="eye">
-                        <i class="fa-solid fa-eye-slash"></i>
+                <form action="" id="signUpForm">
+                    <div class="email">
+                        <i class="fa-regular fa-envelope"></i>
+                        <input type="email" name="email" id="email" placeholder="Enter Your Email">
                     </div>
-                </div>
-                <div class="errorDisplay">
-                    <p class="errorP" id="errorP"></p>
-                </div>
-                <div class="submit">
-                    <button type="submit">Sign In</button>
-                </div>
-                <div class="login">
-                    <p>Don't have an account? <a href="./signup.html">Sign Up</a></p>
-                </div>
-            </form>
+                    <div class="password">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" name="password" id="password" placeholder="Enter Your Password">
+                        <div class="eye">
+                            <i class="fa-solid fa-eye-slash"></i>
+                        </div>
+                    </div>
+                    <div class="errorDisplay">
+                        <p class="errorP" id="errorP"></p>
+                    </div>
+                    <div class="submit">
+                        <button type="submit" id="submitSignUpBtn">
+                            <div class="loading-container" id="loading-container">
+                                <div class="loading-text">Signing In <span class="dots">
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                    <span class="dot"></span>
+                                </span>
+                               </div>
+                            </div>
+                            <span id="SignUpText">Sign In</span>
+                        </button>
+                    </div>
+                    <div class="login">
+                        <p>Don't have an account? <a href="./signup.html">Sign Up</a></p>
+                    </div>
+                    <div class="forgotten login">
+                        <a href="">Forgotten Password?</a>
+                    </div>
+                </form>
+            </div>
+            <div class="secondheropart">
+                <img src="../Images/create-an-account-gif.gif" alt="secure-login">
+            </div>
+        </hero>
+        <div class="foot">
+            <p class="pfoot">©2025 PayVora Vault. All Right Reserved</p>
         </div>
-        <div class="secondheropart">
-            <img src="../Images/create-an-account-gif.gif" alt="secure-login">
-        </div>
-    </hero>
-    <p class="pfoot">©2025 PayVora Vault. All Right Reserved</p>
-    <script type="module" src="../JS/signup.js"></script>
+    </div>
+    <script type="module" src="../JS/signin.js"></script>
 </body>
 </html>

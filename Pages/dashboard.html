@@ -3,9 +3,147 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBOard</title>
+    <title>DashBoard</title>
+    <link rel="shortcut icon" href="../Images/PayVora-logo.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../Css/dashboard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rock+Salt&display=swap" rel="stylesheet">
 </head>
-<body>
-    <h1>Welcome To Your Personal Dashboard</h1>
+<body style="display: none;">
+    <div class="hiddenSettings">
+        <div class="card">
+            <h3>Security & Privacy</h3>
+            <div class="contents">
+                <a href=""><i class="fa-solid fa-unlock"></i> Change Password</a>
+                <a href="" id="resetA"><i class="fa-solid fa-rotate-right"></i> Reset Pin</a>
+                <a href="" style="color: red;"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+                <a href="" style="color: red;"><i class="fa-solid fa-trash"></i> Delete Account</a>
+            </div>
+        </div>
+    </div>
+    <section class="section" id="section">
+        <div class="first-content">
+            <header class="header" id="header">
+                <div class="greet">
+                    <i class="fa-solid fa-user difer"></i>
+                    <p id="greetP"></p>
+                </div>
+                <div class="links">
+                    <li><a href="" class="present">OverView</a></li>
+                    <li><a href="">Accounts</a></li>
+                    <li><a href="">Transactions</a></li>
+                    <li><a href="">Loans</a></li>
+                </div>
+                <div class="icons">
+                    <i class="fa-solid fa-bell"></i>
+                    <span>|</span>
+                    <i class="fa-solid fa-gear settingsI"></i>
+                </div>
+            </header>
+            <hero class="hero" id="hero">
+                <div class="partOne">
+                    <h3>Total Balance</h3>
+                    <div class="balanceDiv">
+                        <i class="fa-solid fa-eye balanceEye"></i>
+                        <p id="balanceP"></p>
+                    </div>
+                </div>
+                <div class="partTwo">
+                    <a href="" id="sendMoneyA"><i class="fa-solid fa-arrow-up-right-from-square"></i> Send Money</a>
+                    <a href="" id="addMoneyA"><i class="fa-solid fa-square-plus"></i> Deposit Money</a>
+                </div>
+            </hero>
+        </div>
+    </section>
+    <div class="positioned">
+        <div class="card cardOne">
+            <i class="fas fa-exchange-alt"></i>
+            <h5>Domestic Transfers</h5>
+            <p class="amountP">&#8358; 200,65.00</p>
+        </div>
+        <div class="card cardTwo loans">
+            <i class="fas fa-money-bill-wave"></i>
+            <h5>Loans</h5>
+            <p class="amountP">&#8358; 0.00</p>
+        </div>
+        <div class="card cardTwo">
+            <i class="fas fa-piggy-bank"></i>
+            <div class="name">
+                <h5>Business Savings</h5>
+                <p class="percentage">12.2%</p>
+            </div>
+            <p class="amountP">&#8358; 20,65.00</p>
+        </div>
+    </div>
+    <div class="transactions">
+        <div class="recent">
+            <h2>Recent Transactions</h2>
+            <a href="">See All</a>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Account Number</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Transaction Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>123456789</td>
+                    <td>John Doe</td>
+                    <td>2025-03-25</td>
+                    <td>Purchase at Supermarket</td>
+                    <td class="debit">Debit</td>
+                </tr>
+                <tr>
+                    <td>987654321</td>
+                    <td>Jane Smith</td>
+                    <td>2025-03-24</td>
+                    <td>Salary Credit</td>
+                    <td class="credit">Credit</td>
+                </tr>
+                <tr>
+                    <td>123456789</td>
+                    <td>John Doe</td>
+                    <td>2025-03-25</td>
+                    <td>Purchase at Supermarket</td>
+                    <td class="debit">Debit</td>
+                </tr>
+                <tr>
+                    <td>987654321</td>
+                    <td>Jane Smith</td>
+                    <td>2025-03-24</td>
+                    <td>Salary Credit</td>
+                    <td class="credit">Credit</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="hiddenlinks">
+        <div class="one">
+            <i class="fa-solid fa-house present"></i>
+            <a href="" class="present">HOME</a>
+        </div>
+        <div class="two">
+            <i class="fas fa-exchange-alt"></i>  
+            <a href="">Transactions</a>
+        </div>
+        <div class="three">
+            <i class="fas fa-hand-holding-usd"></i>  
+            <a href="">Loans</a>
+        </div>
+        <div class="four">
+            <i class="fas fa-user"></i>
+            <a href="">Accounts</a>
+        </div>
+    </div>
+    <script type="module" src="../JS/dashboard.js"></script>
+    <script type="module" src="../JS/sendMoney.js"></script>
+    <script type="module" src="../JS/addmoney.js"></script>
 </body>
 </html>

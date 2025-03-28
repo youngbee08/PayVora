@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Up Pin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            background-color: black;
+            font-family: roboto;
+        }
+        .pin-con{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: white;
+        }
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            background: rgb(172, 152, 152);
+            padding: 15px;
+            border-radius: 10px;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .pin-input {
+            width: 150px;
+            height: 50px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            background: transparent;
+            border: 2px solid black;
+            color: white;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            letter-spacing: 10px;
+        }
+
+        .pin-input:focus {
+            border-color: #ffffff;
+            background: rgba(59, 59, 59, 0.1);
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+        }
+        h2{
+            color: red;
+            font-size: 40px;
+            font-weight: 600;
+        }
+        ::placeholder{
+            font-size: 15px;
+            margin: 0;
+            padding: 0;
+        }
+          /* Make the SweetAlert2 popup red with black text */
+        .swal2-popup {
+            background: red !important; /* Red background */
+            color: black !important; /* Black text */
+        }
+
+        /* Change the overlay (background blur effect) */
+        .swal2-overlay {
+            background: rgba(255, 0, 0, 0.5) !important; /* Light red overlay */
+        }
+
+        /* Change button colors */
+        .swal2-confirm, .swal2-cancel {
+            background: black !important; /* Black button */
+            color: red !important; /* Red text */
+            border: 2px solid red !important; /* Red border */
+        }
+
+        /* ✅ Change the Success Icon (Checkmark & Border) */
+        .swal2-icon.swal2-success {
+            border-color: black !important; /* Black success border */
+            color: black !important; /* Black checkmark */
+        }
+
+        .swal2-icon.swal2-success .swal2-success-ring {
+            border-color: black !important; /* Black outer ring */
+        }
+
+        .swal2-icon.swal2-success .swal2-success-line-tip,
+        .swal2-icon.swal2-success .swal2-success-line-long {
+            background-color: black !important; /* Black checkmark lines */
+        }
+
+        /* ✅ Change the Error Icon (X mark & Border) */
+        .swal2-icon.swal2-error {
+            border-color: black !important; /* Black border */
+            color: black !important; /* Black 'X' */
+        }
+
+        .swal2-icon.swal2-error .swal2-x-mark {
+            color: black !important; /* Black 'X' */
+        }
+
+        /* ✅ Change the Info Icon ('i' & Border) */
+        .swal2-icon.swal2-info {
+            border-color: black !important; /* Black border */
+            color: black !important; /* Black 'i' */
+        }
+
+        /* ✅ Change the Warning Icon ('!' & Border) */
+        .swal2-icon.swal2-warning {
+            border-color: black !important; /* Black border */
+            color: black !important; /* Black '!' */
+        }
+
+        /* LOADING */
+        .loading-container {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            border: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            display: none !important;
+        }
+        .loadBack{
+            display: inline-block !important;
+        }
+        .cursorNo{
+            cursor: not-allowed !important;
+        }
+        .loading-text {
+            padding: .3rem !important;
+            margin: 0 !important;
+            font-size: 14px;
+            font-weight: 400;
+            border: none !important;
+            text-align: center !important;
+        }
+        .dots {
+            text-align: center !important;
+            display: inline-block;
+        }
+        .dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            margin: 0 3px;
+            background-color: white;
+            border-radius: 50%;
+            animation: blink 1.4s infinite;
+            text-align: center !important;
+        }
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        .dot:nth-child(4) {
+            animation-delay: 0.6s;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        /* LOADING ENDS */
+        #errorP{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h2 id="greetP">Set up your PIN</h2>
+    <div class="pin-con">
+        <div class="pin-container">
+            <label for="password">*Pin</label>
+            <input type="password" class="pin-input" maxlength="4" placeholder="Enter Pin" id="password">
+            <label for="confirmPassword">*Confirm Pin</label>
+            <input type="password" class="pin-input" maxlength="4" placeholder="Enter Pin" id="confirmPassword">
+            <p id="errorP"></p>
+        </div>
+        <div class="submit">
+            <button type="submit" id="submitBtn">
+                <div class="loading-container" id="loading-container">
+                    <div class="loading-text">Setting Pin<span class="dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </span>
+                   </div>
+                </div>
+                <span id="setPinText">Set Pin</span>
+            </button>
+        </div>
+    </div>
+    <script type="module" src="../JS/setPin.js"></script>
+</body>
+</html>

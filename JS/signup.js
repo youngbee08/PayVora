@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getAuth,createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+import { getAuth,createUserWithEmailAndPassword,sendEmailVerification } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 import { getFirestore,collection,doc,setDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,7 +23,8 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const usersColRef = collection(db, "PayVora Users")
 const signUpForm = document.getElementById("signUpForm");
-const userNameINP = document.getElementById("userName");
+const firstNameINP = document.getElementById("firstName");
+const lastNameINP = document.getElementById("lastName");
 const emailINP = document.getElementById("email");
 const passwordINP = document.getElementById("password");
 const phoneINP = document.getElementById("phone");
@@ -49,10 +50,12 @@ async function createAnAccount(e) {
         submitBTN.disabled = true;
         submitBTN.classList.add("cursorNo");
         const accountDetails = {
-            userName:userNameINP.value.trim(),
+            firstName:firstNameINP.value.trim(),
+            lastName:lastNameINP.value.trim(),
             email:emailINP.value.trim(),
             password:passwordINP.value.trim(),
-            phone:phoneINP.value.trim()
+            phone:phoneINP.value.trim(),
+            balance:0
         }
         console.log(accountDetails);
         if (accountDetails.password.length < 6) {
@@ -88,6 +91,7 @@ async function createAnAccount(e) {
         console.log(res);
         const docRef = doc(usersColRef, res.user.uid);
         await setDoc(docRef, rest);
+        await sendEmailVerification(res.user)
         Swal.fire({
             text: "You Have Signed Up Successfully",
             icon: "success",
@@ -95,7 +99,7 @@ async function createAnAccount(e) {
         });
         console.log("Redirecting...");
         setTimeout(() => {
-            location.href = '../Pages/dashboard.html';
+            location.href = `../Pages/dashboard.html?id=${res.user.uid}`;
         }, 2000);
     } catch (error) {
         console.log(error);
@@ -106,7 +110,7 @@ async function createAnAccount(e) {
         }
         if (error.message === "Firebase: Error (auth/network-request-failed)."){
             errorP.style.color = "red";
-            errorP.textContent ="Network Error, Please Try Again"
+            errorP.textContent ="Error occured, Please Try Again"
             return
         }
         errorP.textContent = error.message;
