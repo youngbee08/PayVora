@@ -79,13 +79,6 @@ async function createAnAccount(e) {
         if (!gmailFormat.test(accountDetails.email)) {
             throw new Error("*Invalid Email Address");
         }
-        if (!accountDetails.email || !accountDetails.password || !accountDetails.userName || !accountDetails.phone) {
-            Swal.fire({
-                text: "Ensure All Fields Are Filled",
-                icon: "error",
-                confirmButtonText: "OK",
-            });
-        }
         const {email,password, ...rest} = accountDetails;
         const res = await createUserWithEmailAndPassword(auth,email,password);
         console.log(res);

@@ -39,7 +39,7 @@ export function whatUserDo() {
 }
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore,collection,doc,getDoc,getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore,collection,doc,getDoc,getDocs,updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -73,14 +73,48 @@ async function getUserDetails() {
             const greetP = document.getElementById("greetP");
             greetP.innerHTML = "";
             greetP.innerHTML += `Hi, ${userData.lastName}👋`;
-            return
         }
         if (document.querySelector("#balanceP")) {
             const balanceP = document.querySelector("#balanceP");
             balanceP.innerHTML = `&#8358; ${userData.balance}`;
         }
+        if (document.getElementById("newName")) {
+            const newName = document.getElementById("newName");
+            newName.value = userData.firstName;
+        }        
+        if (document.getElementById("newlastName")) {
+            const newlastName = document.getElementById("newlastName");
+            newlastName.value = userData.lastName;
+        }        
+        if (document.getElementById("newTel")) {
+            const newTel = document.getElementById("newTel");
+            newTel.value = userData.phone;
+        }
+        if ("profilePic" in userData) {
+            console.log(true);
+            const profileImg = document.querySelector(".profileImg");
+            const profileImg2 = document.querySelector(".profileImg2");
+            const profileI = document.querySelector(".fa-useri");
+            const profileI2 = document.querySelector(".fa-useri2");
+            profileImg.style.display="block";
+            profileImg2.style.display="block";
+            profileI.style.display="none";
+            profile2.style.display="none";
+            profileImg.src=`${userData.profilePic}`;
+        }
+        if (!"profilePic" in userData) {
+            console.log(true);
+            const profileImg = document.querySelector(".profileImg");
+            const profileImg2 = document.querySelector(".profileImg2");
+            const profileI = document.querySelector(".fa-useri");
+            const profileI2 = document.querySelector(".fa-useri2");
+            profileImg.style.display="none";
+            profileImg2.style.display="none";
+            profileI.style.display="block";
+            profileI2.style.display="block";
+        }
     } catch (error) {
-        console.log(error);  
+        console.log(error);
     }
 }
 getUserDetails()
@@ -267,3 +301,82 @@ export async function displayTransactions() {
     }
 }
 displayTransactions()
+function displayQrCode() {
+    if (document.getElementById("newlastName")) {
+        const newlastName = document.getElementById("newlastName");
+        let userURL = `https://google.com/profile?name=${encodeURIComponent(newlastName)}`;
+        document.getElementById("qrCode").innerHTML = "";
+            new QRCode(document.getElementById("qrCode"), {
+                text: userURL,
+                width: 328,
+                height: 328
+            });
+        }
+    }
+displayQrCode()
+async function updateAccount(e) {
+    try {
+        e.preventDefault();
+        errorP.textContent = "";
+        loadingContainer.classList.add("loadBack");
+        SignUpText.style.display ="none";
+        submitUpdateBtn.disabled = true;
+        submitUpdateBtn.classList.add("cursorNo");
+        const image = document.getElementById("image");
+        const nigeriaPhoneNumberFormat = /^(?:\+234|0)[789][01]\d{8}$/;
+        if (!image) {
+            throw new Error("No file input found in this HTML file.");
+            return;
+        }
+
+        if (!image.files.length) {
+            throw new Error("No file selected!");
+            return;
+        }
+
+        const file = image.files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = async function () {
+            const result = reader.result;
+            const userDetails = {
+                firstName: document.getElementById("newName")?.value.trim() || "",
+                lastName: document.getElementById("newlastName")?.value.trim() || "",
+                phone: document.getElementById("newTel")?.value.trim() || "",
+                profilePic: result
+            };
+            if (!nigeriaPhoneNumberFormat.test(userDetails.phone)) {
+                errorP.textContent = "Invalid Phone Number"
+                return
+            }
+            console.log(userDetails);
+            const usersDocRef = doc(userColRef, userID)
+            await updateDoc(usersDocRef, userDetails);
+            Swal.fire({
+                text: "You Have Updated Your Profile Successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+            });
+            console.log("Redirecting...");
+            setTimeout(() => {
+                location.href = `../Pages/dashboard.html?id=${userID}`;
+            }, 2000);
+        };
+
+        reader.readAsDataURL(file);
+
+    } catch (error) {
+        errorP.textContent = error.message;
+        errorP.style.color = "red";
+        console.log(error);
+    } finally {
+        loadingContainer.classList.remove("loadBack");
+        SignUpText.style.display ="block";
+        submitUpdateBtn.disabled = false;
+        submitUpdateBtn.classList.remove("cursorNo");
+    }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    const updateForm = document.getElementById("updateForm");
+    updateForm.addEventListener("submit", updateAccount);
+});
