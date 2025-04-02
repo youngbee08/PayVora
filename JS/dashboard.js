@@ -158,3 +158,52 @@ if (document.getElementById("resetA")) {
     const resetA = document.getElementById("resetA");
     resetA.addEventListener("click", goToSetPin);
 }
+document.addEventListener("DOMContentLoaded", function(){
+    function changeTheme(e) {
+        e.preventDefault()
+        document.body.classList.toggle("whiteTheme");
+        document.querySelector(".first-content").classList.toggle("whiteTheme2");
+        document.querySelector("#header").classList.toggle("headerTheme");
+        document.querySelectorAll(".headerLinks").forEach(link => {
+            link.classList.toggle("headerTheme");
+        });
+        document.querySelectorAll(".iconsI").forEach(iconI => {
+            iconI.classList.toggle("headerTheme");
+        });
+        document.querySelectorAll(".card").forEach(eachCard => {
+            eachCard.classList.toggle("headerTheme");
+        });
+        document.querySelectorAll(".fas").forEach(eachfas => {
+            eachfas.classList.toggle("whiteTheme3");
+        });
+        document.querySelector(".present").classList.toggle("whiteTheme");
+        document.querySelector("#sendMoneyA").classList.toggle("whiteTheme");
+        document.querySelector("#addMoneyA").classList.toggle("whiteTheme");
+        document.querySelector(".transactions").classList.toggle("transactionsTheme");
+        document.querySelector(".seeAllTransactionsA").classList.toggle("whiteTheme");
+        document.querySelectorAll("tbody tr:nth-child(odd)").forEach(eachOddTr => {
+            eachOddTr.classList.toggle("whiteTheme2");
+        });
+        document.querySelectorAll("tbody tr:nth-child(even)").forEach(eachOddTr => {
+            eachOddTr.classList.toggle("whiteTheme4");
+        });
+        document.querySelector(".hiddenSettings").classList.toggle("whiteTheme");
+        document.querySelector(".settingsh3").classList.toggle("whiteTheme");
+        document.querySelectorAll(".settingsA").forEach(eachsettingsA => {
+            eachsettingsA.classList.toggle("whiteTheme");
+        });
+        document.querySelectorAll(".settingsI2").forEach(eachsettingsI2 => {
+            eachsettingsI2.classList.toggle("iTheme");
+        });
+        document.querySelectorAll(".settingsI22").forEach(eachsettingsI22 => {
+            eachsettingsI22.classList.toggle("dangerTheme");
+        });
+        document.querySelectorAll(".danger").forEach(eachdangerA => {
+            eachdangerA.classList.toggle("dangerTheme");
+        });
+    }
+    if (document.getElementById("themeA")) {
+        const themeA = document.getElementById("themeA");
+        themeA.addEventListener("click", changeTheme)
+    }
+});

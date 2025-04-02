@@ -255,7 +255,7 @@ a{
     50% { opacity: 1; }
 }
 /* LOADING ENDS */
-/* MOBILE RESPONSIVENESS */
+/* MOBILE RESPONSIbVENESS */
 @media screen and (max-width:600px) {
     .hero .firstheropart{
         width: 100%;

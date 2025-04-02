@@ -7,6 +7,8 @@
 }
 body{
     background-color: black;
+    color: red;
+    transition: 1s ease-in-out;
 }
 .section{
     width: 100%;
@@ -23,6 +25,7 @@ body{
     height: 100%;
     display: flex;
     flex-direction: column;
+    transition: 1s ease-in-out;
 }
 .first-content .header{
     display: flex;
@@ -208,9 +211,9 @@ tbody tr:nth-child(even) {
 .hiddenSettings{
     position: fixed;
     right: .5rem;
-    width: 200px;
-    height: fit-content;
-    background-color: black;
+    width: 30%;
+    height: 400px;
+    background-color: red;
     color: white;
     z-index: 2000;
     margin-top: 2.3rem;
@@ -224,6 +227,7 @@ tbody tr:nth-child(even) {
     opacity: 0;
     transform: translateX(100%);
     transition: 0.5s ease-in-out;
+    box-shadow: 1px 1px 10px black;
 }
 .hiddenSettings h2{
     font-size: 20px;
@@ -235,15 +239,29 @@ tbody tr:nth-child(even) {
     gap: .5rem;
 }
 .hiddenSettings .card h3{
-    font-size: 15px;
-    font-weight: 300;
+    font-size: 35px;
+    font-weight: 500;
 }
 .hiddenSettings .card a{
     text-transform: none;
     display: block;
     margin-top: .5rem;
-    font-size: 13px;
+    font-size: 23px;
     color: white;
+}
+.hiddenSettings .card a i{
+    margin-right: 1rem;
+    background-color: black;
+    height: fit-content;
+    width: fit-content;
+    border-radius: 50%;
+    padding: .9rem;
+}
+.hiddenSettings .card .danger{
+    color: red !important;
+    background-color: black !important;
+    border-radius: 5px !important;
+    padding: .2rem !important;
 }
 .displaySettings{
     opacity: 1;
@@ -359,6 +377,20 @@ tbody tr:nth-child(even) {
     .hero{
         margin-top: 2rem;
     }
+    .hiddenSettings{
+        width: 80%;
+        height: 45%;
+    }
+    .hiddenSettings .card h3{
+        font-size: 15px;
+    }
+    .hiddenSettings .card .contents a{
+        font-size: 14px;
+    }
+    .hiddenSettings .card .contents a i{
+        padding: .5rem;
+        margin-right: .5rem;
+    }
 }
 @media screen and (max-width:550px) {
     .hiddenSettings{
@@ -375,3 +407,41 @@ tbody tr:nth-child(even) {
     }
 }
 /* RESPONSIVENESS ENDS */
+/* THEMES */
+.whiteTheme{
+    background-color: white !important;
+    color: black !important;
+}
+.headerTheme{
+    color: white !important;
+}
+.whiteTheme2{
+    background-color: black !important;
+    color: white !important;
+}
+.whiteTheme3{
+    background-color: white !important;
+    color: black !important;
+    border-radius: 50%;
+    padding: .5rem;
+}
+.whiteTheme4{
+    background-color: rgb(32, 32, 32) !important;
+    color: white !important;
+}
+.transactionsTheme{
+    color: black!important;
+}
+.iTheme{
+    color: white !important;
+    background-color: black !important;
+    border-radius: 50% !important;
+    padding: .5rem;
+}
+.dangerTheme{
+    color: red !important;
+    background-color: black !important;
+    border-radius: 5px !important;
+    /* padding: .2rem !important; */
+}
+/* THEMES ENDS */

@@ -77,3 +77,11 @@ each.forEach((eachquestion, index) =>{
         }
     });
 });
+const faq = document.querySelector(".faqs");
+const goToFaqA = document.getElementById("goToFaqA");
+const goToFaqA2 = document.getElementById("goToFaqA2");
+goToFaqA.addEventListener("click", goToFaq)
+goToFaqA2.addEventListener("click", goToFaq)
+function goToFaq() {
+    faq.scrollIntoView({behavior:"smooth"});
+}
