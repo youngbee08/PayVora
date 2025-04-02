@@ -1,5 +1,6 @@
 let searchParams = new URLSearchParams(location.search);
 let userID;
+let transactions = [];
 if (searchParams.has("id")) {
     userID = searchParams.get("id");
     console.log(`User ID:${userID}`);
@@ -38,7 +39,7 @@ export function whatUserDo() {
 }
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore,collection,doc,getDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore,collection,doc,getDoc,getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -57,6 +58,7 @@ const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
 const userColRef = collection(db, "PayVora Users");
+const transactionColRef = collection(db, `User ${userID} Transactions`);
 async function getUserDetails() {
     try {
         const userDocRef = doc(userColRef, userID);
@@ -98,7 +100,7 @@ export function closeBalance(newUser) {
     if (!balanceDiv) return;
     balanceDiv.innerHTML = `
         <i class="fa-solid fa-eye-slash balanceEye-slash"></i>
-        <p id="balanceP">******</p>
+        <p id="balanceP" style="font-size:30px; transform: translateY(.2rem);">****</p>
     `;
     document.querySelector(".balanceEye-slash").addEventListener("click", () => openBalance(newUser));
 }
@@ -111,7 +113,7 @@ export async function openBalance(newUser) {
 
     balanceDiv.innerHTML = `
         <i class="fa-solid fa-eye balanceEye"></i>
-        <p id="balanceP">&#8358; ${latestBalance}</p>
+        <p id="balanceP">&#8358;${latestBalance}</p>
     `;
 
     document.querySelector(".balanceEye").addEventListener("click", () => closeBalance(newUser));
@@ -159,8 +161,7 @@ if (document.getElementById("resetA")) {
     resetA.addEventListener("click", goToSetPin);
 }
 document.addEventListener("DOMContentLoaded", function(){
-    function changeTheme(e) {
-        e.preventDefault()
+    function changeTheme() {
         document.body.classList.toggle("whiteTheme");
         document.querySelector(".first-content").classList.toggle("whiteTheme2");
         document.querySelector("#header").classList.toggle("headerTheme");
@@ -172,6 +173,10 @@ document.addEventListener("DOMContentLoaded", function(){
         });
         document.querySelectorAll(".card").forEach(eachCard => {
             eachCard.classList.toggle("headerTheme");
+        });
+        document.querySelector(".hiddenlinks").classList.toggle("whiteTheme")
+        document.querySelectorAll(".present2").forEach(eachPresent => {
+            eachPresent.classList.toggle("whiteTheme");
         });
         document.querySelectorAll(".fas").forEach(eachfas => {
             eachfas.classList.toggle("whiteTheme3");
@@ -204,6 +209,51 @@ document.addEventListener("DOMContentLoaded", function(){
     }
     if (document.getElementById("themeA")) {
         const themeA = document.getElementById("themeA");
-        themeA.addEventListener("click", changeTheme)
+        themeA.addEventListener("click", function(e){
+            e.preventDefault()
+            changeTheme()
+        });
     }
 });
+export async function displayTransactions() {
+    try {
+        const querySnap = await getDocs(transactionColRef);
+        console.log(querySnap);
+        if (querySnap.empty){
+            if (document.getElementById("tBody")) {
+                const tBody = document.getElementById("tBody");
+                tBody.innerHTML = "" ;
+                tBody.innerHTML += `
+                   <tr>
+                     <td colspan="5" style="text-align: center;">No Recent Transaction(s)</td>
+                   </tr>
+                `;
+            }
+            return
+        }
+        querySnap.forEach((docSnap) =>{
+            const wholeTransactions = docSnap.data();
+            transactions.push(wholeTransactions);
+            console.log(transactions);
+            
+            if (document.getElementById("tBody")) {
+                const tBody = document.getElementById("tBody");
+                tBody.innerHTML += "" ;
+                tBody.innerHTML += `
+                  <tr>
+                    <td>${wholeTransactions.accountNumber}</td>
+                    <td>${wholeTransactions.name}</td>
+                    <td>${wholeTransactions.date}</td>
+                    <td class="des">${wholeTransactions.description}</td>
+                    <td class="type">${wholeTransactions.transactiontype}</td>
+                  </tr>
+                `;
+            }
+        });
+        
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+displayTransactions()

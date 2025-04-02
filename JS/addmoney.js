@@ -31,7 +31,7 @@ else{
 const db = getFirestore(app);
 const userColRef = collection(db, "PayVora Users Pin");
 const userColRefBalance = collection(db, "PayVora Users");
-const userTransactionsColRef = collection(db, "PayVora Users Transactions");
+const userTransactionsColRef = collection(db, `User ${userID} Transactions`);
 let newUser;
 async function initializeUser() {
     try {
@@ -92,7 +92,7 @@ async function sendMoney(e) {
         console.log("Every thing Cool");
         let date = new Date;
         const transactionDetails = {
-            recieverName:sendForm.senderName.value.trim(),
+            name:sendForm.senderName.value.trim(),
             accountNumber:sendForm.accountNumber.value.trim(),
             description:sendForm.description.value.trim(),
             amount:sendForm.amount.value.trim(),
