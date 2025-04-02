@@ -4,6 +4,7 @@
     box-sizing: border-box;
     list-style: none;
     text-decoration: none;
+    font-family: roboto;
 }
 body{
     background-color: black;
@@ -270,6 +271,101 @@ tbody tr:nth-child(even) {
 }
 .hiddenlinks{
     display: none;
+}
+.container {
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: auto;
+    background-color: black;
+    transform: translateY(2rem);
+    color: white;
+}
+.profile {
+    margin-bottom: 15px;
+    padding: 1rem;
+}
+.profile i {
+    font-size: 80px;
+    color: white;
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    transform: translateY(-.5rem);
+}
+.upload-btn {
+    background: white;
+    color: black;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    font-size: 14px;
+}
+.upload-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+label {
+    display: block;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 5px;
+}
+input {
+    width: 90%;
+    padding: 12px;
+    border-radius: 5px;
+    border: none;
+    background: #222;
+    color: white;
+    font-size: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+}
+input:focus {
+    border-color: #ff0000;
+    background: #333;
+}
+input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+}
+.upload-btn{
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    font-size: 14px;
+}
+.upload-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.update-btn {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    width: 50%;
+    margin-top: 10px;
+    transition: background 0.3s;
+}
+.update-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
 }
 /* RESPONSIVENESS */
 @media screen and (max-width:750px) {

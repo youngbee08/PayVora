@@ -4,7 +4,7 @@ let transactions = [];
 if (searchParams.has("id")) {
     userID = searchParams.get("id");
     console.log(`User ID:${userID}`);
-    document.body.style.display="block";
+    document.body.style.display="flex";
 }
 else{
     location.href = 'signin.html';
@@ -132,9 +132,19 @@ if (document.getElementById("addMoneyA")) {
     console.log("present");
     
 }
+if (document.querySelectorAll("#goToProfile")) {
+    const goTOProfile = document.querySelectorAll("#goToProfile");
+    goTOProfile.forEach(eachLink =>{
+        eachLink.addEventListener("click", goToEditProfile)
+    });
+}
 function goToSendMoney(e) {
     e.preventDefault()
     location.href = `../Pages/sendMoney.html?id=${userID}`;
+}
+function goToEditProfile(e) {
+    e.preventDefault()
+    location.href = `../Pages/account.html?id=${userID}`;
 }
 function goToDepositMoney(e) {
     e.preventDefault()
