@@ -92,26 +92,22 @@ async function getUserDetails() {
         }
         if ("profilePic" in userData) {
             console.log(true);
-            const profileImg = document.querySelector(".profileImg");
-            const profileImg2 = document.querySelector(".profileImg2");
-            const profileI = document.querySelector(".fa-useri");
-            const profileI2 = document.querySelector(".fa-useri2");
-            profileImg.style.display="block";
-            profileImg2.style.display="block";
-            profileI.style.display="none";
-            profile2.style.display="none";
-            profileImg.src=`${userData.profilePic}`;
+            document.querySelectorAll(".profileImg").forEach(eachPic =>{
+                eachPic.style.display="block";
+                eachPic.src=`${userData.profilePic}`;
+            });
+            document.querySelectorAll(".fa-useri").forEach(eachIcon =>{
+                eachIcon.style.display="none";
+            });
         }
         if (!"profilePic" in userData) {
             console.log(true);
-            const profileImg = document.querySelector(".profileImg");
-            const profileImg2 = document.querySelector(".profileImg2");
-            const profileI = document.querySelector(".fa-useri");
-            const profileI2 = document.querySelector(".fa-useri2");
-            profileImg.style.display="none";
-            profileImg2.style.display="none";
-            profileI.style.display="block";
-            profileI2.style.display="block";
+            document.querySelectorAll(".profileImg").forEach(eachPic => {
+                eachPic.style.display="none";
+            });
+            document.querySelectorAll(".fa-useri").forEach(eachPic => {
+                eachPic.style.display="block";
+            });
         }
     } catch (error) {
         console.log(error);
@@ -172,6 +168,12 @@ if (document.querySelectorAll("#goToProfile")) {
         eachLink.addEventListener("click", goToEditProfile)
     });
 }
+if (document.querySelectorAll("#goToOverview")) {
+    const goToOverview = document.querySelectorAll("#goToOverview");
+    goToOverview.forEach(eachLink =>{
+        eachLink.addEventListener("click", goToOverView)
+    });
+}
 function goToSendMoney(e) {
     e.preventDefault()
     location.href = `../Pages/sendMoney.html?id=${userID}`;
@@ -179,6 +181,10 @@ function goToSendMoney(e) {
 function goToEditProfile(e) {
     e.preventDefault()
     location.href = `../Pages/account.html?id=${userID}`;
+}
+function goToOverView(e) {
+    e.preventDefault()
+    location.href = `../Pages/dashboard.html?id=${userID}`;
 }
 function goToDepositMoney(e) {
     e.preventDefault()
@@ -377,6 +383,8 @@ async function updateAccount(e) {
     }
 }
 document.addEventListener("DOMContentLoaded", function() {
-    const updateForm = document.getElementById("updateForm");
-    updateForm.addEventListener("submit", updateAccount);
+    if (document.getElementById("updateForm")) {
+        const updateForm = document.getElementById("updateForm");
+        updateForm.addEventListener("submit", updateAccount);
+    }
 });
