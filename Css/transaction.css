@@ -1,0 +1,17 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    font-family: roboto;
+}
+.transactions{
+    position: absolute;
+    top: -5%;
+    background-color: black;
+    height: fit-content;
+    margin: 2rem 2rem 0 2rem;
+    width: 95%;
+    padding: 1rem;
+}

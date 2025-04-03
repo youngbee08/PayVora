@@ -3,15 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DashBoard</title>
-    <link rel="shortcut icon" href="../Images/PayVora-logo.png" type="image/x-icon">
+    <title>Account Transactions</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../Css/dashboard.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rock+Salt&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        .transactions{
+            position: absolute;
+            top: -5%;
+            background-color: black;
+            height: fit-content;
+            margin: 2rem 2rem 0 2rem;
+            padding: 1rem;
+            width: 95%;
+        }
+        @media screen and (max-width:750px) {
+
+            section{
+                width: auto !important;
+                justify-content: unset;
+                flex: 0 0 100%;
+            }
+            section .first-content{
+                margin: 0;
+                width: 100%;
+            }
+            .transactions{
+                position: absolute;
+                top: -5%;
+                background-color: black;
+                height: fit-content;
+                margin: 2rem 2rem 0 2rem;
+                padding: 1rem;
+                max-width: 260px;
+            }
+        }
+    </style>
 </head>
-<body style="display: none;">
+<body>
     <div class="hiddenSettings">
         <div class="card">
             <h3 class="settingsh3">Security & Privacy</h3>
@@ -35,10 +66,10 @@
                     <p id="greetP"></p>
                 </div>
                 <div class="links" id="links">
-                    <li><a href="" class="present" id="goToOverview">OverView</a></li>
+                    <li id="goToOverview"><a href="" class="headerLinks">OverView</a></li>
                     <li id="goToProfile"><a href="" class="headerLinks">Accounts</a></li>
-                    <li id="goToTransaction"><a href="" class="headerLinks">Transactions</a></li>
-                    <li id="goToLoans"><a href="" class="headerLinks">Loans</a></li>
+                    <li id="goToTransaction"><a href="">Transactions</a></li>
+                    <li><a href="" class="headerLinks present">Loans</a></li>
                 </div>
                 <div class="icons">
                     <i class="fa-solid fa-bell iconsI"></i>
@@ -46,72 +77,32 @@
                     <i class="fa-solid fa-gear iconsI settingsI"></i>
                 </div>
             </header>
-            <hero class="hero" id="hero">
-                <div class="partOne">
-                    <h3>Total Balance</h3>
-                    <div class="balanceDiv">
-                        <i class="fa-solid fa-eye balanceEye"></i>
-                        <p id="balanceP"></p>
-                    </div>
-                </div>
-                <div class="partTwo">
-                    <a href="" id="sendMoneyA"><i class="fa-solid fa-arrow-up-right-from-square"></i> Send Money</a>
-                    <a href="" id="addMoneyA"><i class="fa-solid fa-square-plus"></i> Deposit Money</a>
-                </div>
-            </hero>
+        </div>
+        <div class="transactions">
+            <div class="recent">
+                <h2>Loans</h2>
+            </div>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>No Loan Offers Available</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </section>
-    <div class="positioned">
-        <div class="card cardOne" id="goToTransaction">
-            <i class="fas fa-exchange-alt"></i>
-            <h5>Domestic Transfers</h5>
-            <p class="amountP">&#8358;200,65.00</p>
-        </div>
-        <div class="card cardTwo loans" id="goToLoans">
-            <i class="fas fa-money-bill-wave"></i>
-            <h5>Loans</h5>
-            <p class="amountP">&#8358;0.00</p>
-        </div>
-        <div class="card cardTwo">
-            <i class="fas fa-piggy-bank"></i>
-            <div class="name">
-                <h5>Business Savings</h5>
-                <p class="percentage">0%</p>
-            </div>
-            <p class="amountP">&#8358;0.00</p>
-        </div>
-    </div>
-    <div class="transactions">
-        <div class="recent">
-            <h2>Recent Transactions</h2>
-            <a href="" id="goToTransaction" class="seeAllTransactionsA">See All</a>
-        </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Account Number</th>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Description</th>
-                    <th>Transaction Type</th>
-                </tr>
-            </thead>
-            <tbody id="tBody">
-            </tbody>
-        </table>
-    </div>
     <div class="hiddenlinks">
         <div class="one">
-            <i class="fas fa-house present" id="goToOverview"></i>
-            <a id="goToOverview" href="./dashboard.html" class="present2 present">HOME</a>
+            <i class="fas fa-house" id="goToOverview"></i>
+            <a id="goToOverview" href="./dashboard.html" class="present2">HOME</a>
         </div>
         <div class="two">
             <i class="fas fa-exchange-alt" id="goToTransaction"></i>  
             <a href="" id="goToTransaction">Transactions</a>
         </div>
         <div class="three">
-            <i class="fas fa-hand-holding-usd" id="goToLoans"></i>  
-            <a href="" id="goToLoans">Loans</a>
+            <i class="fas fa-hand-holding-usd present"></i>  
+            <a href="" class="present">Loans</a>
         </div>
         <div class="four">
             <i class="fas fa-user" id="goToProfile"></i>
@@ -119,7 +110,5 @@
         </div>
     </div>
     <script type="module" src="../JS/dashboard.js"></script>
-    <script type="module" src="../JS/sendMoney.js"></script>
-    <script type="module" src="../JS/addmoney.js"></script>
 </body>
 </html>

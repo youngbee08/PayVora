@@ -174,6 +174,18 @@ if (document.querySelectorAll("#goToOverview")) {
         eachLink.addEventListener("click", goToOverView)
     });
 }
+if (document.querySelectorAll("#goToTransaction")) {
+    const goToTransaction = document.querySelectorAll("#goToTransaction");
+    goToTransaction.forEach(eachLink =>{
+        eachLink.addEventListener("click", goTOTRANSACTION)
+    });
+}
+if (document.querySelectorAll("#goToLoans")) {
+    const goToLoans = document.querySelectorAll("#goToLoans");
+    goToLoans.forEach(eachLink =>{
+        eachLink.addEventListener("click", goToLoan)
+    });
+}
 function goToSendMoney(e) {
     e.preventDefault()
     location.href = `../Pages/sendMoney.html?id=${userID}`;
@@ -186,9 +198,19 @@ function goToOverView(e) {
     e.preventDefault()
     location.href = `../Pages/dashboard.html?id=${userID}`;
 }
+function goTOTRANSACTION(e) {
+    e.preventDefault()
+    location.href = `../Pages/transactions.html?id=${userID}`;
+}
 function goToDepositMoney(e) {
     e.preventDefault()
     location.href = `../Pages/addMoney.html?id=${userID}`;
+    console.log("clicked");
+    
+}
+function goToLoan(e) {
+    e.preventDefault()
+    location.href = `../Pages/loan.html?id=${userID}`;
     console.log("clicked");
     
 }

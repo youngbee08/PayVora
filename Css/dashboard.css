@@ -492,11 +492,13 @@ input::placeholder {
     50% { opacity: 1; }
 }
 /* LOADING ENDS */
-.profileContainer{
+.profileContainer2{
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
+    width: 47px;
+    height: 41px;
 }
 @media screen and (max-width:750px) {
     
@@ -514,6 +516,7 @@ input::placeholder {
     }
     .positioned .card{
         width: 75%;
+        height: 65%;
     }
     .card h5{
         font-size: 12px !important;
@@ -531,7 +534,10 @@ input::placeholder {
         padding: 0.7rem 1rem;
         justify-content: space-between;
     }
-    
+    .profileContainer2{
+        width: 50px;
+        height: 35px;
+    }
     .hiddenlinks div {
         display: flex;
         flex-direction: column;
@@ -616,6 +622,16 @@ input::placeholder {
     .hiddenSettings .card .contents a i{
         padding: .5rem;
         margin-right: .5rem;
+    }
+    .container{
+        flex-direction: column;
+        width: fit-content;
+    }
+    .container .form-con{
+        width: 100%;
+    }
+    .form-con .profile input{
+        width: 50%;
     }
 }
 @media screen and (max-width:550px) {
