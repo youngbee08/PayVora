@@ -541,7 +541,6 @@ input::placeholder {
     }
     .positioned{
         gap: .4rem;
-        top: 12rem;
     }
     .positioned .card{
         width: 75%;
@@ -644,14 +643,21 @@ input::placeholder {
     }
     .hero .partTwo .partTwo2 {
         flex-direction: column;
+        width: 100%;
         align-items: center;
     }
     .hero .partTwo .partTwo2 a {
-        font-size: 14px;
+        font-size: 12px;
         padding: 0.6rem;
         text-align: center;
         width: 100%;
         max-width: 250px;
+    }
+    .hero .partTwo .partTwo2 .sendMoneyA{
+        transform: translateX(-120%);
+    }
+    .hero .partTwo .partTwo2 .addMoneyA{
+        transform: translateY(-120%);
     }
     .hero .partTwo .partTwo1 h3,p{
         font-size: 15px;
