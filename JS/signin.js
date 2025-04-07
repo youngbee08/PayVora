@@ -47,9 +47,6 @@ async function signInYourAccount(e) {
             password:passwordINP.value.trim(),
         }
         console.log(accountDetails);
-        if (!passwordFormat.test(accountDetails.password || !gmailFormat.test(accountDetails.email))) {
-            throw new Error("*Invalid Credential(s)");
-        }
         const {email,password, ...rest} = accountDetails;
         const signInRes = await signInWithEmailAndPassword(auth, email, password);
         const user = auth.currentUser;
@@ -72,7 +69,7 @@ async function signInYourAccount(e) {
         if (error.message === "Firebase: Error (auth/invalid-credential).") {
             errorP.style.color = "red";
             errorP.innerHTML += `
-               <p>Account not found, Would you like to <a href="./signup.html" style="color: white;">Sign Up</a></p>
+               <p>Invalid Credential(s)</p>
             `;
             return
         }

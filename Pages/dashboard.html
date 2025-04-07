@@ -38,7 +38,7 @@
         <div class="card">
             <h3 class="settingsh3">Security & Privacy</h3>
             <div class="contents">
-                <a href="" class="settingsA"><i class="fa-solid fa-unlock settingsI2"></i> Change Password</a>
+                <a href="" class="settingsA" id="changePassA"><i class="fa-solid fa-unlock settingsI2"></i> Change Password</a>
                 <a href="" class="settingsA" id="resetA"><i class="fa-solid fa-rotate-right settingsI2"></i> Reset Pin</a>
                 <a href="" class="settingsA" id="themeA"><i class="fa-solid fa-moon settingsI2"></i> Change Theme</a>
                 <a href=""  class="settingsA danger" id="signOutA"><i class="fa-solid fa-right-from-bracket settingsI2 settingsI22"></i> Sign Out</a>
@@ -63,7 +63,7 @@
                     <li id="goToLoans"><a href="" class="headerLinks">Loans</a></li>
                 </div>
                 <div class="icons">
-                    <i class="fa-solid fa-bell iconsI"></i>
+                    <a href="./contactus.html"> <i class="fa-solid fa-question iconsI"></i></a>
                     <span>|</span>
                     <i class="fa-solid fa-gear iconsI settingsI"></i>
                 </div>
@@ -77,8 +77,14 @@
                     </div>
                 </div>
                 <div class="partTwo">
-                    <a href="" id="sendMoneyA"><i class="fa-solid fa-arrow-up-right-from-square"></i> Send Money</a>
-                    <a href="" id="addMoneyA"><i class="fa-solid fa-square-plus"></i> Deposit Money</a>
+                    <div class="partTwo1">
+                        <h3>Account Number</h3>
+                        <p id="accountNumberP"><span id="accountNumberSpan"></span> <i class="fas fa-copy" id="fa-copy" style="cursor: pointer;display: none;"></i></p>
+                    </div>
+                    <div class="partTwo2">
+                        <a href="" id="sendMoneyA"><i class="fa-solid fa-arrow-up-right-from-square"></i> Send Money</a>
+                        <a href="" id="addMoneyA"><i class="fa-solid fa-square-plus"></i> Deposit Money</a>
+                    </div>
                 </div>
             </hero>
         </div>

@@ -37,10 +37,27 @@ export function whatUserDo() {
         }
     }
 }
+function generateAccountNumber() {
+    let number = '';
+    for (let i = 0; i < 10; i++) {
+      number += Math.floor(Math.random() * 10);
+    }
+    return number;
+}
+function copyAccountNumber() {
+    const number = document.getElementById('accountNumberSpan').innerText;
+    navigator.clipboard.writeText(number).then(() => {
+      Swal.fire('Copied', `${number} Is Copied to Clipboard`, 'success');
+    });
+}
+if (document.querySelector(".fa-copy")) {
+    const copyIcon = document.querySelector(".fa-copy");
+    copyIcon.addEventListener("click", copyAccountNumber)
+}
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import { getFirestore,collection,doc,getDoc,getDocs,updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
-import { getAuth,signOut,onAuthStateChanged,deleteUser } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+import { getAuth,signOut,onAuthStateChanged,deleteUser,updatePassword } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -64,6 +81,7 @@ const userColRef = collection(db, "PayVora Users");
 const transactionColRef = collection(db, `User ${userID} Transactions`);
 const bodyLoader = document.querySelector(".spinner");
 const overlay = document.querySelector(".overlay");
+const sendForm = document.getElementById("sendForm");
 async function getUserDetails() {
     try {
         bodyLoader.style.display = "block";
@@ -202,9 +220,19 @@ if (document.querySelectorAll("#goToLoans")) {
         eachLink.addEventListener("click", goToLoan)
     }); 
 }
+if (document.querySelectorAll("#changePassA")) {
+    const changePassA = document.querySelectorAll("#changePassA");
+    changePassA.forEach(eachLink =>{
+        eachLink.addEventListener("click", goToChangePassword)
+    }); 
+}
 function goToSendMoney(e) {
     e.preventDefault()
     location.href = `../Pages/sendMoney.html?id=${userID}`;
+}
+function goToChangePassword(e) {
+    e.preventDefault()
+    location.href = `../Pages/changePassword.html?id=${userID}`;
 }
 function goToEditProfile(e) {
     e.preventDefault()
@@ -517,6 +545,69 @@ async function deleteAccount(e) {
         );
     }
 }
+async function changePassword(e) {
+    e.preventDefault()
+    try {
+        const passwordFormat = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        errorP.textContent = "";
+        loadingCon.classList.add("loadBack");
+        prodeedtext.style.display ="none";
+        proceedBTN.disabled = true;
+        proceedBTN.classList.add("cursorNo");
+        const newPassword = sendForm.password.value;
+        const confirmNewPassword = sendForm.confirmPassword.value;
+        if (newPassword.length < 6) {
+            throw new Error("*Password Should Be More Than Six Characters");
+        }
+        if (!/[A-Z]/.test(newPassword)) {
+            throw new Error("*Password must contain at least one uppercase letter (A-Z).");
+        }
+        if (!/[a-z]/.test(newPassword)) {
+            throw new Error("*Password must contain at least one lowercase letter (a-z).");
+        }
+        if (!/\d/.test(newPassword)) {
+            throw new Error("*Password must include at least one number (0-9).");
+        }
+        if (!/[@$!%*?&]/.test(newPassword)) {
+            throw new Error("*Password must have at least one special character (@, $, !, %, *, ?, &).");
+        }
+        if (newPassword !== confirmNewPassword) {
+            throw new Error("*Password does not match");
+        }
+        await updatePassword(auth.currentUser, newPassword);
+        Swal.fire({
+            text: "Password Changed Successfully",
+            icon: "success",
+            confirmButtonText: "OK",
+        });
+        console.log("Redirecting...");
+        setTimeout(() => {
+            location.href = `../Pages/dashboard.html?id=${user.uid}`;
+        }, 2000);
+    } catch (error) {
+        console.log(error);
+        if (error.message === "Firebase: Error (auth/network-request-failed)."){
+            errorP.style.color = "red";
+            errorP.textContent ="Error occured, Please Try Again"
+            return
+        }
+        if (error.message === "Firebase: Error (auth/requires-recent-login)."){
+            errorP.style.color = "red";
+            errorP.innerHTML =`Session Expired, Please Try <a href="./signin.html">Logging In</a>Again`
+            return
+        }
+        errorP.textContent = error.message;
+    } finally {
+        loadingCon.classList.remove("loadBack");
+        prodeedtext.style.display ="block";
+        proceedBTN.disabled = false;
+        proceedBTN.classList.remove("cursorNo");
+    }
+}
+if (document.getElementById("sendForm")) {
+    const sendForm = document.getElementById("sendForm");
+    sendForm.addEventListener("submit", changePassword);
+}
 if (document.getElementById("signOutA")) {
     const signOutA = document.getElementById("signOutA");
     signOutA.addEventListener("click", logOutUser);
@@ -525,10 +616,24 @@ if (document.getElementById("deleteA")) {
     const deleteA = document.getElementById("deleteA");
     deleteA.addEventListener("click", deleteAccount);
 }
-onAuthStateChanged(auth, (user)=>{
+onAuthStateChanged(auth,async (user)=>{
     if (user) {
         console.log("User is signed in", user);
-        
+        const uid = user.uid;
+        const userDocRef = doc(userColRef, uid);
+        const docSnap = await getDoc(userDocRef);
+        const userData = docSnap.data();
+        if (docSnap.exists && userData.accountNumber) {
+            document.getElementById("fa-copy").style.display = "inline-block";
+            document.getElementById("accountNumberSpan").innerText = userData.accountNumber;
+        } else {
+            const accountNumberSpan = generateAccountNumber();
+            await updateDoc(userDocRef, {
+                accountNumber: accountNumberSpan,
+            });
+            document.getElementById("fa-copy").style.display = "inline-block";
+            document.getElementById("accountNumberSpan").innerText = accNum;
+        }
     }else{
         console.log("No one is signed In");
         setTimeout(() => {

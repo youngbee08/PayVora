@@ -112,8 +112,14 @@ body{
 .hero .partTwo{
     display: flex;
     gap: .8rem;
+    flex-direction: column;
 }
-.hero .partTwo a{
+.hero .partTwo .partTwo2{
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+.hero .partTwo .partTwo2 a{
     font-size: 15px;
     background-color: rgb(190, 6, 6);
     color: black;
@@ -535,6 +541,7 @@ input::placeholder {
     }
     .positioned{
         gap: .4rem;
+        top: 12rem;
     }
     .positioned .card{
         width: 75%;
@@ -592,6 +599,7 @@ input::placeholder {
     .transactions {
         padding: 1rem;
         transform: translateY(4rem);
+        padding-bottom: 7rem;
     }
     
     .transactions .recent h2 {
@@ -615,21 +623,39 @@ input::placeholder {
         padding: 0.8rem;
         font-size: 0.9rem;
     }
-    .partTwo {
+    .hero{
+        align-items: start !important;
+        margin-top: 2rem;
+    }
+    .hero .partOne{
+        gap: 0.5rem;
+    }
+    .hero .partOne h3,i,p{
+        font-size: 15px !important;
+        font-weight: 900;
+    }
+    .hero .partOne .balanceDiv{
+        gap: 0.3rem;
+    }
+    .hero .partTwo {
         flex-direction: column;
         align-items: center;
         gap: 0.6rem;
     }
-    
-    .hero .partTwo a {
+    .hero .partTwo .partTwo2 {
+        flex-direction: column;
+        align-items: center;
+    }
+    .hero .partTwo .partTwo2 a {
         font-size: 14px;
         padding: 0.6rem;
         text-align: center;
         width: 100%;
         max-width: 250px;
     }
-    .hero{
-        margin-top: 2rem;
+    .hero .partTwo .partTwo1 h3,p{
+        font-size: 15px;
+        font-weight: 900;
     }
     .hiddenSettings{
         width: 80%;
