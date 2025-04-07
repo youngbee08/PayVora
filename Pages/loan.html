@@ -43,6 +43,27 @@
     </style>
 </head>
 <body>
+    <div class="hiddenlinks">
+        <div class="one">
+            <i class="fas fa-house" id="goToOverview"></i>
+            <a id="goToOverview" href="./dashboard.html" class="present2">HOME</a>
+        </div>
+        <div class="two">
+            <i class="fas fa-exchange-alt" id="goToTransaction"></i>  
+            <a href="" id="goToTransaction">Transactions</a>
+        </div>
+        <div class="three">
+            <i class="fas fa-hand-holding-usd present"></i>  
+            <a href="" class="present">Loans</a>
+        </div>
+        <div class="four">
+            <i class="fas fa-user" id="goToProfile"></i>
+            <a href="" id="goToProfile">Accounts</a>
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="spinner"></div>
+    </div>
     <div class="hiddenSettings">
         <div class="card">
             <h3 class="settingsh3">Security & Privacy</h3>
@@ -60,7 +81,7 @@
             <header class="header" id="header">
                 <div class="greet">
                     <i class="fa-solid fa-user fa-useri difer" id="goToProfile"></i>
-                    <div class="profileContainer2">
+                    <div class="profileContainer2" style="display: none;">
                         <img class="profileImg" style="width: 100%; height: 100%; border-radius: 100%; display: none; object-fit: cover;     border: 2px solid #fff;" src="" alt="" id="goToProfile">
                     </div>
                     <p id="greetP"></p>
@@ -91,24 +112,6 @@
             </table>
         </div>
     </section>
-    <div class="hiddenlinks">
-        <div class="one">
-            <i class="fas fa-house" id="goToOverview"></i>
-            <a id="goToOverview" href="./dashboard.html" class="present2">HOME</a>
-        </div>
-        <div class="two">
-            <i class="fas fa-exchange-alt" id="goToTransaction"></i>  
-            <a href="" id="goToTransaction">Transactions</a>
-        </div>
-        <div class="three">
-            <i class="fas fa-hand-holding-usd present"></i>  
-            <a href="" class="present">Loans</a>
-        </div>
-        <div class="four">
-            <i class="fas fa-user" id="goToProfile"></i>
-            <a href="" id="goToProfile">Accounts</a>
-        </div>
-    </div>
     <script type="module" src="../JS/dashboard.js"></script>
 </body>
 </html>

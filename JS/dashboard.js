@@ -40,6 +40,7 @@ export function whatUserDo() {
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
 import { getFirestore,collection,doc,getDoc,getDocs,updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getAuth,signOut,onAuthStateChanged,deleteUser } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -57,10 +58,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Firestore
 const db = getFirestore(app);
+//Initialize AUth
+const auth = getAuth(app);
 const userColRef = collection(db, "PayVora Users");
 const transactionColRef = collection(db, `User ${userID} Transactions`);
+const bodyLoader = document.querySelector(".spinner");
+const overlay = document.querySelector(".overlay");
 async function getUserDetails() {
     try {
+        bodyLoader.style.display = "block";
+        overlay.style.display = "block";
         const userDocRef = doc(userColRef, userID);
         const docSnap = await getDoc(userDocRef);
         if (!docSnap.exists()) {
@@ -92,6 +99,9 @@ async function getUserDetails() {
         }
         if ("profilePic" in userData) {
             console.log(true);
+            document.querySelectorAll(".profileContainer2").forEach(eachPicCon =>{
+                eachPicCon.style.display="block";
+            });
             document.querySelectorAll(".profileImg").forEach(eachPic =>{
                 eachPic.style.display="block";
                 eachPic.src=`${userData.profilePic}`;
@@ -105,12 +115,18 @@ async function getUserDetails() {
             document.querySelectorAll(".profileImg").forEach(eachPic => {
                 eachPic.style.display="none";
             });
+            document.querySelectorAll(".profileContainer2").forEach(eachPicCon =>{
+                eachPicCon.style.display="none";
+            });
             document.querySelectorAll(".fa-useri").forEach(eachPic => {
                 eachPic.style.display="block";
             });
         }
     } catch (error) {
         console.log(error);
+    } finally {
+        bodyLoader.style.display = "none";
+        overlay.style.display = "none";
     }
 }
 getUserDetails()
@@ -184,7 +200,7 @@ if (document.querySelectorAll("#goToLoans")) {
     const goToLoans = document.querySelectorAll("#goToLoans");
     goToLoans.forEach(eachLink =>{
         eachLink.addEventListener("click", goToLoan)
-    });
+    }); 
 }
 function goToSendMoney(e) {
     e.preventDefault()
@@ -219,6 +235,16 @@ function goToSettings() {
         const hiddenSettings = document.querySelector(".hiddenSettings");
         hiddenSettings.classList.toggle("displaySettings");
     }
+}
+function closeSettings() {
+    if (document.querySelector(".hiddenSettings")) {
+        const hiddenSettings = document.querySelector(".hiddenSettings");
+        hiddenSettings.classList.remove("displaySettings");
+    }
+}
+if (document.querySelector(".hiddenSettings")) {
+    const hiddenSettings = document.querySelector(".hiddenSettings");
+    hiddenSettings.addEventListener("click", closeSettings)
 }
 if (document.querySelector(".settingsI")) {
     const settingsI = document.querySelector(".settingsI");
@@ -346,10 +372,6 @@ async function updateAccount(e) {
     try {
         e.preventDefault();
         errorP.textContent = "";
-        loadingContainer.classList.add("loadBack");
-        SignUpText.style.display ="none";
-        submitUpdateBtn.disabled = true;
-        submitUpdateBtn.classList.add("cursorNo");
         const image = document.getElementById("image");
         const nigeriaPhoneNumberFormat = /^(?:\+234|0)[789][01]\d{8}$/;
         if (!image) {
@@ -366,6 +388,8 @@ async function updateAccount(e) {
         const reader = new FileReader();
 
         reader.onloadend = async function () {
+            bodyLoader.style.display = "block";
+            overlay.style.display = "block";
             const result = reader.result;
             const userDetails = {
                 firstName: document.getElementById("newName")?.value.trim() || "",
@@ -380,6 +404,8 @@ async function updateAccount(e) {
             console.log(userDetails);
             const usersDocRef = doc(userColRef, userID)
             await updateDoc(usersDocRef, userDetails);
+            bodyLoader.style.display = "none";
+            overlay.style.display = "none";
             Swal.fire({
                 text: "You Have Updated Your Profile Successfully",
                 icon: "success",
@@ -398,10 +424,6 @@ async function updateAccount(e) {
         errorP.style.color = "red";
         console.log(error);
     } finally {
-        loadingContainer.classList.remove("loadBack");
-        SignUpText.style.display ="block";
-        submitUpdateBtn.disabled = false;
-        submitUpdateBtn.classList.remove("cursorNo");
     }
 }
 document.addEventListener("DOMContentLoaded", function() {
@@ -410,3 +432,107 @@ document.addEventListener("DOMContentLoaded", function() {
         updateForm.addEventListener("submit", updateAccount);
     }
 });
+async function logOutUser(e) {
+    e.preventDefault()
+    const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You will be logged out of your account.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Sign out!",
+        cancelButtonText: "No, cancel!",
+    });
+    if (result.isConfirmed) {
+        try {
+            bodyLoader.style.display = "block";
+            overlay.style.display = "block";
+            await signOut(auth);
+            Swal.fire({
+                text: "You Have Signed Out Successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+            });
+        } catch (error) {
+            Swal.fire(
+                "Error",
+                "An error occured while signing out.",
+                "error",
+            );
+            if (error.message === "Firebase: Error (auth/requires-recent-login).") {
+                Swal.fire("Session Expired", "Please Log In Again", "warning")
+            }
+            console.log(error);
+        } finally {
+            bodyLoader.style.display = "none";
+            overlay.style.display = "none";
+        }
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+            "Cancelled",
+            "You are still signed in.",
+            "info",
+        );
+    }
+}
+async function deleteAccount(e) {
+    e.preventDefault()
+    const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "This will delete your Account Permanently.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Delete!",
+        cancelButtonText: "No, cancel!",
+    });
+    if (result.isConfirmed) {
+        try {
+            bodyLoader.style.display = "block";
+            overlay.style.display = "block";
+            const user = auth.currentUser;
+            await deleteUser(user);
+            Swal.fire({
+                text: "You Have Deleted Your Account Successfully",
+                icon: "success",
+                confirmButtonText: "OK",
+            });
+        } catch (error) {
+            Swal.fire(
+                "Error",
+                "An error occured while deleting Account.",
+                "error",
+            );
+            console.log(error);
+            if (error.message === "Firebase: Error (auth/requires-recent-login).") {
+                Swal.fire("Session Expired", "Please Log In Again", "warning")
+            }
+        } finally {
+            bodyLoader.style.display = "none";
+            overlay.style.display = "none";
+        }
+    } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire(
+            "Cancelled",
+            "You are still signed in.",
+            "info",
+        );
+    }
+}
+if (document.getElementById("signOutA")) {
+    const signOutA = document.getElementById("signOutA");
+    signOutA.addEventListener("click", logOutUser);
+}
+if (document.getElementById("deleteA")) {
+    const deleteA = document.getElementById("deleteA");
+    deleteA.addEventListener("click", deleteAccount);
+}
+onAuthStateChanged(auth, (user)=>{
+    if (user) {
+        console.log("User is signed in", user);
+        
+    }else{
+        console.log("No one is signed In");
+        setTimeout(() => {
+            location.href = 'signin.html';
+        }, 3000);
+    }
+})

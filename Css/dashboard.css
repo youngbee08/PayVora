@@ -282,6 +282,8 @@ tbody tr:nth-child(even) {
     color: white;
     display: flex;
     justify-content: space-between;
+    padding-bottom: 5rem;
+    /* overflow: auto; */
 }
 .container .form-con{
     width: 50%;
@@ -499,6 +501,26 @@ input::placeholder {
     border-radius: 50%;
     width: 47px;
     height: 41px;
+
+}
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-top: 4px solid red;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    z-index: 9999;
+    pointer-events: all;
+}
+@keyframes spin {
+    to {
+    transform: rotate(360deg);
+    }
 }
 @media screen and (max-width:750px) {
     
@@ -598,7 +620,7 @@ input::placeholder {
         align-items: center;
         gap: 0.6rem;
     }
-
+    
     .hero .partTwo a {
         font-size: 14px;
         padding: 0.6rem;
@@ -687,3 +709,11 @@ input::placeholder {
     /* padding: .2rem !important; */
 }
 /* THEMES ENDS */
+.overlay{
+    width: 100% ;
+    height: 100%;
+    position: fixed;
+    background-color: black;
+    z-index: 2000;
+    display: none;
+}
