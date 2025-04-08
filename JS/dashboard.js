@@ -187,8 +187,9 @@ if (document.querySelector(".balanceEye")) {
     balanceEye.addEventListener("click", closeBalance);
 }
 if (document.getElementById("sendMoneyA")) {
-    const sendMoneyA = document.getElementById("sendMoneyA");
-    sendMoneyA.addEventListener("click", goToSendMoney);
+    const sendMoneyA = document.querySelectorAll("#sendMoneyA").forEach(eachA => {
+        eachA.addEventListener("click", goToSendMoney)
+    });
 }
 if (document.getElementById("addMoneyA")) {
     const addMoneyA = document.getElementById("addMoneyA");
@@ -628,11 +629,13 @@ onAuthStateChanged(auth,async (user)=>{
             document.getElementById("accountNumberSpan").innerText = userData.accountNumber;
         } else {
             const accountNumberSpan = generateAccountNumber();
-            await updateDoc(userDocRef, {
-                accountNumber: accountNumberSpan,
-            });
+            if (!userData.accountNumber) {
+                await updateDoc(userDocRef, {
+                    accountNumber: accountNumberSpan,
+                });
+            }
             document.getElementById("fa-copy").style.display = "inline-block";
-            document.getElementById("accountNumberSpan").innerText = accNum;
+            document.getElementById("accountNumberSpan").innerText = accountNumberSpan;
         }
     }else{
         console.log("No one is signed In");

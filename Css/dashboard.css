@@ -636,13 +636,25 @@ input::placeholder {
     .hero .partOne .balanceDiv{
         gap: 0.3rem;
     }
+    .hero .partOne .second{
+        display: block !important;
+        font-size: 12px;
+        padding: 0.6rem;
+        text-align: center;
+        width: 100%;
+        max-width: 250px;
+        background-color: rgb(190, 6, 6);
+        color: black;
+        border-radius: 5px;
+        transform: translateY(.5rem);
+    }
     .hero .partTwo {
         flex-direction: column;
         align-items: center;
         gap: 0.6rem;
     }
     .hero .partTwo .partTwo2 {
-        flex-direction: column;
+        /* flex-direction: column; */
         width: 100%;
         align-items: center;
     }
@@ -653,11 +665,8 @@ input::placeholder {
         width: 100%;
         max-width: 250px;
     }
-    .hero .partTwo .partTwo2 .sendMoneyA{
-        transform: translateX(-120%);
-    }
-    .hero .partTwo .partTwo2 .addMoneyA{
-        transform: translateY(-120%);
+    .hero .partTwo .partTwo2 .first{
+        display: none;
     }
     .hero .partTwo .partTwo1 h3,p{
         font-size: 15px;

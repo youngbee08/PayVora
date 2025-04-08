@@ -1,7 +1,7 @@
 import { whatUserDo,openBalance,closeBalance,refreshBalance } from './dashboard.js';
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-import { getFirestore,collection,doc,getDoc,addDoc,updateDoc } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+import { getFirestore,collection,doc,getDoc,addDoc,updateDoc,getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -93,21 +93,40 @@ async function sendMoney(e) {
         let date = new Date;
         const transactionDetails = {
             name:sendForm.holderName.value.trim(),
-            accountNumber:sendForm.accountNumber.value.trim(),
+            accountNumber:"To" + " " + sendForm.accountNumber.value.trim(),
             description:sendForm.description.value.trim(),
             amount:sendForm.amount.value.trim(),
             transactiontype:"Debit",
             date:date.toLocaleDateString()
         };
         console.log(transactionDetails);
-        newUser.send(+sendForm.amount.value.trim())
+        const allUsersSnapshot  = await getDocs(userColRefBalance);
+        let receiverDoc = null;
+        allUsersSnapshot.forEach(doc => {
+            const data = doc.data(  );
+            if (data.accountNumber && data.accountNumber === accountInp) {
+                receiverDoc = doc;
+            }
+            console.log(data);
+        });
+        if (!receiverDoc) {
+            throw new Error("*Receiver account not found.");
+        }
+        if (receiverDoc.id === userID) {
+            throw new Error("*You cannot send money to yourself.");
+        }
+        newUser.send(+sendForm.amount.value.trim());
         const updatedBalance = await updateBalance(userID, newUser.getBalance());
         if (document.querySelector("#balanceP")) {
             const balanceP = document.querySelector("#balanceP");
             balanceP.innerHTML="";
             balanceP.innerHTML=`&#8358; ${updatedBalance}`;
         }
-        await refreshBalance()
+        await refreshBalance();
+        const receiverRef = receiverDoc.ref;
+        const receiverData = receiverDoc.data();
+        const receiverNewBalance = (receiverData.balance || 0) + parseFloat(sendForm.amount.value.trim());
+        await updateDoc(receiverRef, { balance: receiverNewBalance });
         const transactionDocRef = await addDoc(userTransactionsColRef, transactionDetails);
         console.log("Transaction Successful");
         Swal.fire({
@@ -123,6 +142,9 @@ async function sendMoney(e) {
         if (error.message === "Cannot read properties of undefined (reading 'pin')") {
             errorP.innerHTML =`You haven't set up your pin,     <a href="../Pages/setPin.html?id=${userID}">Set Up Pin Now</a>`;
             return
+        }
+        if (error.message === "FirebaseError: Failed to get document because the client is offline.") {
+            errorP.innerHTML = `No Internet, Please Try Again Later`;
         }
         errorP.textContent = error.message;
     } finally {
