@@ -76,6 +76,11 @@ async function sendMoney(e) {
         proceedBTN.disabled = true;
         proceedBTN.classList.add("cursorNo");
         let errorP = document.getElementById("errorP");
+        const senderDocRef = doc(userColRefBalance, userID);
+        const senderDocSnap = await getDoc(senderDocRef);
+        const senderData = senderDocSnap.data();
+        const senderAccountNumber = senderData.accountNumber || "Unknown";
+        const senderAccountName = senderData.lastName || "Anonymous";
         const accountInp = sendForm.accountNumber.value.trim();
         const pinInp = sendForm.pin.value.trim();
         e.preventDefault()
@@ -89,13 +94,19 @@ async function sendMoney(e) {
         if (accountInp.length > 10 || accountInp.length < 10) {
             throw new Error("*Invalid Account Number");
         }
+        if (!sendForm.amount.value.trim()) {
+            throw new Error("*Please enter an amount to send.");
+        }
+        if (sendForm.amount.value.trim() <= 0) {
+            throw new Error("*Invalid Amount");
+        }
         console.log("Every thing Cool");
         let date = new Date;
         const transactionDetails = {
             name:sendForm.holderName.value.trim(),
             accountNumber:"To" + " " + sendForm.accountNumber.value.trim(),
             description:sendForm.description.value.trim(),
-            amount:sendForm.amount.value.trim(),
+            amount:"-₦" + sendForm.amount.value.trim(),
             transactiontype:"Debit",
             date:date.toLocaleDateString()
         };
@@ -127,7 +138,17 @@ async function sendMoney(e) {
         const receiverData = receiverDoc.data();
         const receiverNewBalance = (receiverData.balance || 0) + parseFloat(sendForm.amount.value.trim());
         await updateDoc(receiverRef, { balance: receiverNewBalance });
+        const receiverTransactionRef = collection(db, `User ${receiverDoc.id} Transactions`);
+        const receiverTransaction = {
+            name: senderAccountName,
+            accountNumber: "From " + senderAccountNumber,
+            description: sendForm.description.value.trim(),
+            amount:"₦" + sendForm.amount.value.trim(),
+            transactiontype: "Credit",
+            date: date.toLocaleDateString(),
+        };
         const transactionDocRef = await addDoc(userTransactionsColRef, transactionDetails);
+        await addDoc(receiverTransactionRef, receiverTransaction);
         console.log("Transaction Successful");
         Swal.fire({
             text: "Transaction Successful",
@@ -143,8 +164,11 @@ async function sendMoney(e) {
             errorP.innerHTML =`You haven't set up your pin,     <a href="../Pages/setPin.html?id=${userID}">Set Up Pin Now</a>`;
             return
         }
-        if (error.message === "FirebaseError: Failed to get document because the client is offline.") {
+        if (error.message === "Failed to get document because the client is offline.") {
             errorP.innerHTML = `No Internet, Please Try Again Later`;
+        }
+        if (error.message === "Cannot read properties of undefined (reading 'send')") {
+            errorP.innerHTML = `Transaction Failed, Please Try Again Later`;
         }
         errorP.textContent = error.message;
     } finally {

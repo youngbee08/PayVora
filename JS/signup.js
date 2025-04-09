@@ -41,6 +41,13 @@ eyeSlash.addEventListener("click", viewPassword);
 const passwordFormat = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 const gmailFormat =/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const nigeriaPhoneNumberFormat = /^(?:\+234|0)[789][01]\d{8}$/;
+function generateAccountNumber() {
+    let number = '';
+    for (let i = 0; i < 10; i++) {
+      number += Math.floor(Math.random() * 10);
+    }
+    return number;
+}
 async function createAnAccount(e) {
     try {
         e.preventDefault()
@@ -55,7 +62,8 @@ async function createAnAccount(e) {
             email:emailINP.value.trim(),
             password:passwordINP.value.trim(),
             phone:phoneINP.value.trim(),
-            balance:0
+            balance:0,
+            accountNumber:generateAccountNumber()
         }
         console.log(accountDetails);
         if (accountDetails.password.length < 6) {

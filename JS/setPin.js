@@ -53,6 +53,10 @@ export async function setUserPin() {
             return
         }
         const userPin = {pin:password.value.trim()}
+        if (!password.value.trim() || !confirmPassword.value.trim()) {
+            throw new Error("Please fill in all fields");
+            
+        }
         if (password.value.trim() !== confirmPassword.value.trim()) {
             throw new Error("Pin doesn't match");
         }

@@ -37,13 +37,6 @@ export function whatUserDo() {
         }
     }
 }
-function generateAccountNumber() {
-    let number = '';
-    for (let i = 0; i < 10; i++) {
-      number += Math.floor(Math.random() * 10);
-    }
-    return number;
-}
 function copyAccountNumber() {
     const number = document.getElementById('accountNumberSpan').innerText;
     navigator.clipboard.writeText(number).then(() => {
@@ -98,6 +91,14 @@ async function getUserDetails() {
             const greetP = document.getElementById("greetP");
             greetP.innerHTML = "";
             greetP.innerHTML += `Hi, ${userData.lastName}👋`;
+        }
+        if (document.getElementById("fa-copy")) {
+           const faCopy = document.getElementById("fa-copy"); 
+           faCopy.style.display = "inline-block";
+        }
+        if (document.getElementById("accountNumberSpan")) {
+           const accountNumberSpan = document.getElementById("accountNumberSpan"); 
+           accountNumberSpan.innerText = userData.accountNumber;
         }
         if (document.querySelector("#balanceP")) {
             const balanceP = document.querySelector("#balanceP");
@@ -352,7 +353,7 @@ export async function displayTransactions() {
                 tBody.innerHTML = "" ;
                 tBody.innerHTML += `
                    <tr>
-                     <td colspan="5" style="text-align: center;">No Recent Transaction(s)</td>
+                     <td colspan="6" style="text-align: center;">No Recent Transaction(s)</td>
                    </tr>
                 `;
             }
@@ -370,6 +371,7 @@ export async function displayTransactions() {
                   <tr>
                     <td>${wholeTransactions.accountNumber}</td>
                     <td>${wholeTransactions.name}</td>
+                    <td>${wholeTransactions.amount}</td>
                     <td>${wholeTransactions.date}</td>
                     <td class="des">${wholeTransactions.description}</td>
                     <td class="type">${wholeTransactions.transactiontype}</td>
@@ -524,6 +526,9 @@ async function deleteAccount(e) {
                 icon: "success",
                 confirmButtonText: "OK",
             });
+            setTimeout(() => {
+                location.href = `./signup.html`;
+            }, 2000);
         } catch (error) {
             Swal.fire(
                 "Error",
@@ -621,22 +626,6 @@ onAuthStateChanged(auth,async (user)=>{
     if (user) {
         console.log("User is signed in", user);
         const uid = user.uid;
-        const userDocRef = doc(userColRef, uid);
-        const docSnap = await getDoc(userDocRef);
-        const userData = docSnap.data();
-        if (docSnap.exists && userData.accountNumber) {
-            document.getElementById("fa-copy").style.display = "inline-block";
-            document.getElementById("accountNumberSpan").innerText = userData.accountNumber;
-        } else {
-            const accountNumberSpan = generateAccountNumber();
-            if (!userData.accountNumber) {
-                await updateDoc(userDocRef, {
-                    accountNumber: accountNumberSpan,
-                });
-            }
-            document.getElementById("fa-copy").style.display = "inline-block";
-            document.getElementById("accountNumberSpan").innerText = accountNumberSpan;
-        }
     }else{
         console.log("No one is signed In");
         setTimeout(() => {

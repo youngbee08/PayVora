@@ -60,7 +60,7 @@ initializeUser();
 let sendForm;
 if (document.getElementById("sendForm")) {
     sendForm = document.getElementById("sendForm");
-    sendForm.addEventListener("submit", sendMoney);
+    sendForm.addEventListener("submit", addMoney);
 }
 async function updateBalance(userID, newBalance) {
     const userDocRef = doc(userColRefBalance, userID);
@@ -68,7 +68,7 @@ async function updateBalance(userID, newBalance) {
     const updatedDocSnap = await getDoc(userDocRef);
     return updatedDocSnap.exists() ? updatedDocSnap.data().balance:0;
 }
-async function sendMoney(e) {
+async function addMoney(e) {
     errorP.textContent = "";
     try {
         loadingCon.classList.add("loadBack");
@@ -89,11 +89,17 @@ async function sendMoney(e) {
         if (accountInp.length > 10 || accountInp.length < 10) {
             throw new Error("*Invalid Account Number");
         }
+        if (sendForm.amount.value.trim() <= 0) {
+            throw new Error("*Invalid Amount");
+        }
+        if (!sendForm.amount.value.trim()) {
+            throw new Error("*Please enter an amount to send.");
+        }
         console.log("Every thing Cool");
         let date = new Date;
         const transactionDetails = {
             name:sendForm.senderName.value.trim(),
-            accountNumber:sendForm.accountNumber.value.trim(),
+            accountNumber:"From" + sendForm.accountNumber.value.trim(),
             description:sendForm.description.value.trim(),
             amount:sendForm.amount.value.trim(),
             transactiontype:"Credit",

@@ -241,6 +241,44 @@
     text-align: center;
 }
 /* SCROLL UP ICON ENDS */
+/* MAIN OVERVIEW */
+.mainOverview{
+    width: 100%;
+    font-family: roboto;
+    padding:1rem 2rem;
+}
+.mainOverview h1{
+    text-align: center;
+    font-size: 50px;
+    font-weight: 900;
+}
+.mainOverview .content{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4rem;
+}
+.mainOverview .content .mainOverview-conII{
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.mainOverview-conII .overviewlaptop .overviewlaptopimg{
+    width: 85%;
+    height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1000;
+    margin: auto;
+}
+.mainOverview-conII .overviewmobile .overviewmobileimg{
+    rotate: 20deg;
+    width: 90%;
+    height: 100%;
+    object-fit: contain;
+    transform: translateX(-7rem);
+}
+/* MAIN OVERVIEW ENDS */
 /* SECTION-3 */
 .section3{
     padding: 2rem;
@@ -508,6 +546,9 @@
     .section2 .content .services .each-service-con .service{
         height: 100%;
         width: 100%;
+    }
+    .mainOverview{
+        display: none;
     }
     .section3{
         flex-direction: column;
