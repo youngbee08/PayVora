@@ -141,7 +141,7 @@ body{
     /* border-bottom: 4px solid red; */
     color: red;
     width: 35%;
-    height: 80%;
+    height: fit-content;
     padding:2rem .8rem .5rem;
     font-family: Roboto;
     box-shadow: 1px 1px 15px rgba(0, 0, 0, 0.89);
@@ -544,7 +544,6 @@ input::placeholder {
     }
     .positioned .card{
         width: 75%;
-        height: 65%;
     }
     .card h5{
         font-size: 12px !important;
