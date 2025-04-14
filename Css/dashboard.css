@@ -562,8 +562,8 @@ input::placeholder {
         justify-content: space-between;
     }
     .profileContainer2{
-        width: 50px;
-        height: 35px;
+        width: 45px !important;
+        height: 35px !important;
     }
     .hiddenlinks div {
         display: flex;
