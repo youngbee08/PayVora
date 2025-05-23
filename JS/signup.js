@@ -7,14 +7,13 @@ import { getFirestore,collection,doc,setDoc } from "https://www.gstatic.com/fire
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyB-FjdOhYEOwisGBCFUMc7r6tjfguuBQ2M",
+    apiKey: window.env.api_key,
     authDomain: "payvora-f627f.firebaseapp.com",
     projectId: "payvora-f627f",
     storageBucket: "payvora-f627f.firebasestorage.app",
     messagingSenderId: "566155557360",
     appId: "1:566155557360:web:552b145be338890cb50535"
 };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 //Initialize Authentification
